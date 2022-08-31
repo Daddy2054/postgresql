@@ -1,0 +1,18 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "fantasy_worlds",
+      "user": "postgres",
+      "password": "mysecretpassword",
+      "port": "5455"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "fantasy_worlds_test",
+      "user": "postgres",
+      "password": "mysecretpassword"
+    },
+    "sql-file" : true
+  }
