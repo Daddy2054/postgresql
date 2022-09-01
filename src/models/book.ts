@@ -9,10 +9,28 @@ export type Book = {
   totalPages: number;
   summary: string;
 };
-
-// new version from pg-admin docs
 export class BookStore {
-  index(): void {
+
+  async index(): Promise<Book[]> { // new version
+    client
+      .connect()
+      .then(() => console.log("connected"))
+      .catch((err) => console.error("connection error", err.stack));
+    const res: QueryResult = await client
+      .query("SELECT * FROM books;")
+      .then(() => client.end())
+      .then(() => {
+        console.log(res.rows);
+        return res.rows;
+      })
+      .catch((e) => console.error(e.stack))
+      .then((e) => {
+        throw new Error(`Could not get books. Error: ${e}`);
+      });
+    return res.rows;
+  }
+
+  index_old(): void { // old version
     client
       .connect()
       .then(() => console.log("connected"))
@@ -26,7 +44,6 @@ export class BookStore {
       })
       .then(() => client.end());
   }
-
   show(id: string): void {
     client
       .connect()
@@ -123,6 +140,6 @@ export class Books {
   }
 }
 */
-const books = new Books();
+const books = new BookStore();
 
 console.log(books.index());
