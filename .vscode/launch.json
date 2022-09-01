@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/src/models/book.js",
+            "program": "${workspaceFolder}/dist/models/book.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
