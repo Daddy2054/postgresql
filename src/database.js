@@ -1,16 +1,18 @@
-import dotenv from "dotenv";
+"use strict";
+exports.__esModule = true;
+var dotenv_1 = require("dotenv");
 //import { Pool } from "pg";
-import pkg from "pg";
+var pg_1 = require("pg");
 //const { Pool } = pkg;
-var Client = pkg.Client;
-dotenv.config();
+var Client = pg_1["default"].Client;
+dotenv_1["default"].config();
 var _a = process.env, POSTGRES_HOST = _a.POSTGRES_HOST, POSTGRES_DB = _a.POSTGRES_DB, POSTGRES_USER = _a.POSTGRES_USER, POSTGRES_PASSWORD = _a.POSTGRES_PASSWORD;
 var client = new Client({
     host: POSTGRES_HOST,
     database: POSTGRES_DB,
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
-    port: 5455,
+    port: 5455
 });
 /*
 //client.connect();
@@ -39,4 +41,4 @@ client.query("select * from sightings1", (err, res:QueryResult) => {
 });
 client.end();
 */
-export default client;
+exports["default"] = client;

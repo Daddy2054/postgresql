@@ -10,7 +10,18 @@ export type Book = {
   summary: string;
 };
 export class BookStore {
-
+  async index(): Promise<Book[]> {
+    try {
+      const conn = await client.connect();
+      const result = await client.query("SELECT * FROM books;");
+      client.end();
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Could not get books. Error: ${err}`);
+    }
+  }
+}
+/*
   async index(): Promise<Book[]> { // new version
     client
       .connect()
@@ -30,7 +41,8 @@ export class BookStore {
     return res.rows;
   }
 
-  index_old(): void { // old version
+  index_old(): void {
+    // old version
     client
       .connect()
       .then(() => console.log("connected"))
@@ -92,7 +104,7 @@ export class BookStore {
       .then(() => client.end());
   }
 }
-
+*/
 /*
 // working version
 export class Books {
