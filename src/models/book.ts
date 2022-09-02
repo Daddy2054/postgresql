@@ -14,9 +14,9 @@ export class BookStore {
   async index(): Promise<Book[]> {
     try {
       const conn = await client.connect();
-      const result = await client.query("SELECT * FROM books;");
-      client.end();
-      return result.rows;
+      const result = await conn.query("SELECT * FROM books;");
+      conn.release();
+      return result.rows as Book[];
     } catch (err) {
       throw new Error(`Could not get books. Error: ${err}`);
     }

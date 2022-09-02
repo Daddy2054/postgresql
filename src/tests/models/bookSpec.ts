@@ -10,6 +10,6 @@ describe("Bookstore testing suite", () => {
 
   it("index method should return a list of products", async () => {
     const result = await store.index();
-    expect(result).toEqual([]);
+    expect(result).toBeInstanceOf(Array);
   });
 });
