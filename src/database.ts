@@ -1,10 +1,10 @@
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 //import { Pool } from "pg";
 
-import pkg from "pg";
+//import pkg from "pg";
 //const { Pool } = pkg;
-const { Client } = pkg;
-
+//const { Client } = pkg;
+import { Client } from "pg";
 dotenv.config();
 
 const { POSTGRES_HOST, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD } =

@@ -1,6 +1,7 @@
 //import { QueryResult } from "pg";
-import { QueryResult } from "pg";
-import client from "../database.js";
+//import { QueryResult } from "pg";
+//import client from "../database.js";
+import client from "../database";
 
 export type Book = {
   id: number;
