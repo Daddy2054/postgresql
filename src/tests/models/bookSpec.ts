@@ -7,36 +7,64 @@ describe("Bookstore testing suite", () => {
   it("should have an index method", () => {
     expect(store.index).toBeDefined();
   });
+  it("should have a show method", () => {
+    expect(store.show).toBeDefined();
+  });
 
-  it("index method should return a list of products", async () => {
+  it("should have a create method", () => {
+    expect(store.create).toBeDefined();
+  });
+
+  it("should have a delete method", () => {
+    expect(store.delete).toBeDefined();
+  });
+
+  it("create method should add a book", async () => {
+    const result = await store.create({
+      title: "Bridge to Terabithia",
+      author: "Katherine Paterson",
+      total_pages: 250,
+      summary: "Childrens",
+      id: 0,
+    });
+    expect(result).toEqual({
+      id: 1,
+      title: "Bridge to Terabithia",
+      //@ts-ignore
+      total_pages: 250,
+      author: "Katherine Paterson",
+      summary: "Childrens",
+    });
+  });
+
+  it("index method should return a list of books", async () => {
     const result = await store.index();
-    expect(result).toBeInstanceOf(Array);
+    expect(result).toEqual([
+      {
+        id: 1,
+        title: "Bridge to Terabithia",
+        total_pages: 250,
+        author: "Katherine Paterson",
+        summary: "Childrens",
+      },
+    ]);
   });
 
-  it("show method should return a single product", async () => {
-    const result = await store.show("2");
-    expect(result).toBeInstanceOf(Object);
+  it("show method should return the correct book", async () => {
+    const result = await store.show("1");
+    expect(result).toEqual({
+      id: 1,
+      title: "Bridge to Terabithia",
+      total_pages: 250,
+      author: "Katherine Paterson",
+      summary: "Childrens",
+    });
   });
 
-  it("create method should return a new single product", async () => {
-    const newBook = {
-      title: 'title11',
-      author: 'string_author',
-      total_pages: 150,
-      summary: "djfhgakldshaskjhgaslkdhgasklj aslkdhfaslkjhf",
-      id: 1
-    };
+  it("delete method should remove the book", async () => {
+    store.delete("1");
+    const result = await store.index();
 
-    const result = await store.create(newBook);
-    expect(result).toBeInstanceOf(Object);
+    expect(result).toEqual([]);
   });
-
-  it("delete method should return 'undefined'", async () => {
-    const result = await store.delete("5");
-    expect(result).toBeUndefined();
-  });
-/// refactor here, first check if exist, then delete and check if undefined
-
 });
-
-//add setup and teardown of book table

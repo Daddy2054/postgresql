@@ -2,7 +2,7 @@
     "dev": {
       "driver": "pg",
       "host": "127.0.0.1",
-      "database": "fantasy_worlds",
+      "database": "full_stack",
       "user": "postgres",
       "password": "mysecretpassword",
       "port": "5455"
@@ -10,9 +10,10 @@
     "test": {
       "driver": "pg",
       "host": "127.0.0.1",
-      "database": "fantasy_worlds_test",
+      "database": "full_stack_test",
       "user": "postgres",
-      "password": "mysecretpassword"
+      "password": "mysecretpassword",
+      "port": "5455"
     },
     "sql-file" : true
   }

@@ -7,7 +7,8 @@
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "jasmine": "jasmine",
     "build": "npx tsc",
-    "test": "npm run build && npm run jasmine",
+    "test_old": "npm run build && npm run jasmine",
+    "test": "ENV=test && npx tsc && db-migrate db:create full_stack_test && db-migrate --env test up && jasmine && db-migrate db:drop full_stack_test",
     "tsc": "tsc"
   },
   "author": "",

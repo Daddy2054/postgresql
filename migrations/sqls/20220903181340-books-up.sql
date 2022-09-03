@@ -1,8 +1,8 @@
-CREATE TABLE book2 (
+CREATE TABLE books (
+    id serial,
     title varchar,
     author varchar,
     total_pages int,
-    type VARCHAR,
     summary text
 );
 
