@@ -3,3 +3,5 @@ node_modules
 Guide*
 dist
 package-lock.json
+package-lock.json
+yarn.lock

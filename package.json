@@ -9,7 +9,8 @@
     "build": "npx tsc",
     "test_old": "npm run build && npm run jasmine",
     "test": "ENV=test && npx tsc && db-migrate db:create full_stack_test && db-migrate --env test up && jasmine && db-migrate db:drop full_stack_test",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "start": "nodemon src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "jasmine": "^4.3.0",
     "jasmine-spec-reporter": "^7.0.0",
     "tsc-watch": "^4.2.9",
+    "nodemon": "^2.0.19",
     "typescript": "^4.1.3"
   }
 }
