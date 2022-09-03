@@ -19,6 +19,10 @@ describe("Bookstore testing suite", () => {
     expect(store.delete).toBeDefined();
   });
 
+  it("should have a update method", () => {
+    expect(store.update).toBeDefined();
+  });
+
   it("create method should add a book", async () => {
     const result = await store.create({
       title: "Bridge to Terabithia",
@@ -55,6 +59,18 @@ describe("Bookstore testing suite", () => {
     expect(result).toEqual({
       id: 1,
       title: "Bridge to Terabithia",
+      total_pages: 250,
+      author: "Katherine Paterson",
+      summary: "Childrens",
+    });
+  });
+
+
+  it("update method should return the updated book", async () => {
+    const result = await store.update("1","Kingdom of Terabithia");
+    expect(result).toEqual({
+      id: 1,
+      title: "Kingdom of Terabithia",
       total_pages: 250,
       author: "Katherine Paterson",
       summary: "Childrens",

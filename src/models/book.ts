@@ -32,6 +32,20 @@ export class BookStore {
     }
   }
 
+  async update(id: string, title: string): Promise<Book> {
+    try {
+      const conn = await client.connect();
+      const result = await conn.query(
+        "UPDATE books SET title = $1 WHERE id=($2) RETURNING *;",
+        [title, id]
+      );
+      conn.release();
+      return result.rows[0] as Book;
+    } catch (err) {
+      throw new Error(`Could not update book ${id} Error: ${err}`);
+    }
+  }
+
   async create(b: Book): Promise<Book> {
     try {
       const conn = await client.connect();
@@ -51,7 +65,7 @@ export class BookStore {
       const conn = await client.connect();
       const result = await conn.query("DELETE FROM books WHERE id=($1);", [id]);
       conn.release();
-      console.log(result.rows[0]);
+      // console.log(result.rows[0]);
       return result.rows[0] as Book;
     } catch (err) {
       throw new Error(`Could not delete book ${id}. Error: ${err}`);
