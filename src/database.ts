@@ -14,9 +14,14 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_TEST_DB,
   ENV,
+  BCRYPT_PASSWORD,
+  SALT_ROUNDS,
 } = process.env;
 
-let client:Pool;
+export const saltRounds = SALT_ROUNDS
+export const pepper =   BCRYPT_PASSWORD
+
+let client: Pool;
 console.log(ENV);
 
 if (ENV === "dev") {
