@@ -1,33 +1,38 @@
-import express, { NextFunction, Request, Response } from "express";
-import { Article } from "../models/article";
+import express, { Request, Response } from "express";
+import { Article, ArticleStore } from "../models/article";
+
 const routes = express.Router();
+const store = new ArticleStore();
 
-routes.get("/", (req: Request, res: Response): void => {
+routes.get("/", async (req: Request, res: Response) => {
   try {
-    res.send('this is the "index" route');
+    const index = await store.index();
+    res.json(index);
   } catch (err) {
     res.status(400);
     res.json(err);
   }
 });
 
-routes.get("/:id", (req: Request, res: Response): void => {
+routes.get("/:id", async (req: Request, res: Response) => {
   try {
-    res.send('this is the "show" route');
+    const show = await store.show(req.params["id"]);
+    res.json(show);
   } catch (err) {
     res.status(400);
     res.json(err);
   }
 });
 
-routes.post("/", (req: Request, res: Response): void => {
+routes.post("/", async (req: Request, res: Response) => {
   const article: Article = {
     id: req.body.id,
     title: req.body.title,
     content: req.body.content,
   };
   try {
-    res.send('this is the "create" route');
+    const create = await store.create(article);
+    res.json(create);
   } catch (err) {
     res.status(400);
     res.json(err);
@@ -48,9 +53,10 @@ routes.put("/:id", (req: Request, res: Response): void => {
   }
 });
 
-routes.delete("/:id", (req: Request, res: Response): void => {
+routes.delete("/:id", async (req: Request, res: Response) => {
   try {
-    res.send('this is the "delete" route');
+    const del = await store.delete(req.params["id"]);
+    res.json(del);
   } catch (err) {
     res.status(400);
     res.json(err);
