@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { Article, ArticleStore } from "../models/article";
+import verifyAuthToken from "../middleware/verify_token";
 
 const articlesRoutes = express.Router();
 const store = new ArticleStore();
@@ -24,43 +25,55 @@ articlesRoutes.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-articlesRoutes.post("/", async (req: Request, res: Response) => {
-  const article: Article = {
-    id: req.body.id,
-    title: req.body.title,
-    content: req.body.content,
-  };
-  try {
-    const create = await store.create(article);
-    res.json(create);
-  } catch (err) {
-    res.status(400);
-    res.json(err);
+articlesRoutes.post(
+  "/",
+  verifyAuthToken,
+  async (req: Request, res: Response) => {
+    const article: Article = {
+      id: req.body.id,
+      title: req.body.title,
+      content: req.body.content,
+    };
+    try {
+      const create = await store.create(article);
+      res.json(create);
+    } catch (err) {
+      res.status(400);
+      res.json(err);
+    }
   }
-});
+);
 
-articlesRoutes.put("/:id", (req: Request, res: Response): void => {
-  const article: Article = {
-    id: req.params.id,
-    title: req.body.title,
-    content: req.body.content,
-  };
-  try {
-    res.send('this is the "edit" route');
-  } catch (err) {
-    res.status(400);
-    res.json(err);
+articlesRoutes.put(
+  "/:id",
+  verifyAuthToken,
+  (req: Request, res: Response): void => {
+    const article: Article = {
+      id: req.params.id,
+      title: req.body.title,
+      content: req.body.content,
+    };
+    try {
+      res.send('this is the "edit" route');
+    } catch (err) {
+      res.status(400);
+      res.json(err);
+    }
   }
-});
+);
 
-articlesRoutes.delete("/:id", async (req: Request, res: Response) => {
-  try {
-    const del = await store.delete(req.params["id"]);
-    res.json(del);
-  } catch (err) {
-    res.status(400);
-    res.json(err);
+articlesRoutes.delete(
+  "/:id",
+  verifyAuthToken,
+  async (req: Request, res: Response) => {
+    try {
+      const del = await store.delete(req.params["id"]);
+      res.json(del);
+    } catch (err) {
+      res.status(400);
+      res.json(err);
+    }
   }
-});
+);
 
 export default articlesRoutes;
