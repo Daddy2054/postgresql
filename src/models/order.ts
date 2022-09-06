@@ -57,4 +57,8 @@ export class OrderStore {
       throw new Error(`Could not delete Order ${id}. Error: ${err}`);
     }
   }
+  // inner join from exersice
+  // select orders.id, orders.status,users.username from orders inner join users on orders.user_id=users.id;
+  //solution
+  //SELECT * FROM products INNER JOIN order_products ON product.id = order_products.id;
 }
