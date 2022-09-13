@@ -15,15 +15,24 @@ OrdersRoutes.get("/", async (req: Request, res: Response) => {
   }
 });
 
-OrdersRoutes.get("/:id", async (req: Request, res: Response) => {
+OrdersRoutes.use("/:id",(req,res,next) => {
+  verifyAuthToken(req,res,next)
+  next()
+});
+
+OrdersRoutes.get("/:id", async (req: Request, res: Response, next) => {
   try {
     const show = await store.show(req.params["id"]);
     res.json(show);
+    next()
   } catch (err) {
     res.status(400);
     res.json(err);
   }
 });
+
+
+
 
 OrdersRoutes.post(
   "/",
@@ -44,16 +53,16 @@ OrdersRoutes.post(
   }
 );
 
-
 OrdersRoutes.put(
   "/:id",
   verifyAuthToken,
-  (req: Request, res: Response): void => {
+  async (req: Request, res: Response) => {
     const Order: Order = {
       id: req.params.id,
       title: req.body.title,
-      content: req.body.content,
+      content: req.body.user_id,
     };
+    console.log({ Order });
     try {
       res.send('this is the "edit" route');
     } catch (err) {

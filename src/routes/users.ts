@@ -38,8 +38,12 @@ usersRoutes.post("/authenticate", async (req: Request, res: Response) => {
   };
   try {
     const authUser = await store.authenticate(user.username, user.password);
-    const token = jwt.sign({ authUser }, token_secret as string);
+   
+    if (authUser) {
+      const userid = authUser.id
+       const token = jwt.sign( {authUser}  , token_secret as string);
     res.json(token);
+    }
   } catch (err) {
     res.status(400);
     res.json(err);
